@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADS&AI - De Haagse Hogeschool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo-text">ADS & AI</span>
+                <span class="logo-subtitle">De Haagse Hogeschool</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#about">Over ons</a></li>
+                <li><a href="#form">Dien een opdracht in</a></li>
+                <li><a href="#contact" class="btn-nav">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>ADS & AI</h1>
+                <p class="hero-subtitle">Applied Data Science & Artificial Intelligence</p>
+                <p class="hero-description">De Haagse Hogeschool</p>
+                <a href="#form" class="btn btn-primary btn-lg">Dien een opdracht in</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Over ons</h2>
+            <div class="about-content">
+                <!-- Content to be added by user -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section id="form" class="form-section">
+        <div class="container">
+            <h2>Dien een opdracht in</h2>
+            <p class="section-subtitle">Vul het formulier in en wij nemen contact met u op</p>
+
+            <form class="submission-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="org-name">Organisatienaam *</label>
+                        <input type="text" id="org-name" name="organization" placeholder="Naam van uw organisatie" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-name">Contactpersoon *</label>
+                        <input type="text" id="contact-name" name="contact_name" placeholder="Uw naam" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact-email">E-mailadres *</label>
+                        <input type="email" id="contact-email" name="email" placeholder="uw@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-phone">Telefoonnummer</label>
+                        <input type="tel" id="contact-phone" name="phone" placeholder="+31 6 12345678">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="background">Beschrijfing van het project *</label>
+                    <textarea id="background" name="background" placeholder="Beschrijf de achtergrond en context van uw project" rows="4" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-submit">Opdracht indienen</button>
+                <p class="form-note">* Verplichte velden</p>
+            </form>
+
+            <div id="success-message" class="success-message" style="display: none;">
+                ✅ Bedankt! Uw opdracht is ontvangen. Wij nemen snel contact met u op.
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>De Haagse Hogeschool</h3>
+                    <p class="contact-title">Applied Data Science & AI</p>
+                    <p class="contact-info">
+                        <strong>Adres:</strong> Johanna Westerdijkplein 75<br>
+                        2521 EN Den Haag
+                    </p>
+                    <p class="contact-info">
+                        <strong>Website:</strong> <a href="https://www.dehaagsehogeschool.nl" target="_blank">www.dehaagsehogeschool.nl</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 ADS & AI - De Haagse Hogeschool. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
