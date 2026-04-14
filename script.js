@@ -20,33 +20,9 @@ const validators = {
         if (!emailRegex.test(value)) return 'Voer een geldig e-mailadres in';
         return '';
     },
-    project_type: (value) => {
-        if (!value) return 'Selecteer een projecttype';
-        return '';
-    },
     background: (value) => {
-        if (!value.trim()) return 'Achtergrond is verplicht';
-        if (value.trim().length < 10) return 'Achtergrond moet minstens 10 karakters lang zijn';
-        return '';
-    },
-    problem: (value) => {
-        if (!value.trim()) return 'Probleemdefiniëring is verplicht';
-        if (value.trim().length < 10) return 'Probleemdefiniëring moet minstens 10 karakters lang zijn';
-        return '';
-    },
-    goals: (value) => {
-        if (!value.trim()) return 'Doelen/Deliverables is verplicht';
-        if (value.trim().length < 10) return 'Doelen moet minstens 10 karakters lang zijn';
-        return '';
-    },
-    dataset: (value) => {
-        if (!value.trim()) return 'Datasetbeschrijving is verplicht';
-        if (value.trim().length < 10) return 'Datasetbeschrijving moet minstens 10 karakters lang zijn';
-        return '';
-    },
-    techniques: (value) => {
-        if (!value.trim()) return 'ML technieken is verplicht';
-        if (value.trim().length < 5) return 'ML technieken beschrijving moet minstens 5 karakters lang zijn';
+        if (!value.trim()) return 'Beschrijving is verplicht';
+        if (value.trim().length < 10) return 'Beschrijving moet minstens 10 karakters lang zijn';
         return '';
     }
 };
@@ -56,12 +32,7 @@ const formFields = {
     organization: document.querySelector('input[name="organization"]'),
     contact_name: document.querySelector('input[name="contact_name"]'),
     email: document.querySelector('input[name="email"]'),
-    project_type: document.querySelector('select[name="project_type"]'),
-    background: document.querySelector('textarea[name="background"]'),
-    problem: document.querySelector('textarea[name="problem"]'),
-    goals: document.querySelector('textarea[name="goals"]'),
-    dataset: document.querySelector('textarea[name="dataset"]'),
-    techniques: document.querySelector('textarea[name="techniques"]')
+    background: document.querySelector('textarea[name="background"]')
 };
 
 // Validate single field
@@ -122,11 +93,11 @@ Object.keys(formFields).forEach(fieldName => {
 });
 
 // Handle form submission
-submissionForm.addEventListener('submit', (e) => {
+submissionForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevent the default form submission (redirect)
+
     // Validate form
     if (!validateForm()) {
-        e.preventDefault();
-        
         // Scroll to first error
         const firstError = document.querySelector('.error-message');
         if (firstError) {
@@ -141,8 +112,37 @@ submissionForm.addEventListener('submit', (e) => {
     submitBtn.disabled = true;
     submitBtn.textContent = '⏳ Verzenden...';
 
-    // Formspree will handle the submission automatically
-    // The form will be submitted normally with the method="POST" action
+    // Prepare form data
+    const formData = new FormData(submissionForm);
+    const action = submissionForm.getAttribute('action');
+
+    try {
+        const response = await fetch(action, {
+            method: 'POST',
+            body: formData
+        });
+
+        // StaticForms returns 200 on success and 400 on error
+        if (response.ok) {
+            // Success!
+            submissionForm.style.display = 'none';
+            successMessage.style.display = 'block';
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            // Error from StaticForms
+            const data = await response.json().catch(() => ({}));
+            const errorMessage = data.message || 'Er was een probleem bij het verzenden van uw formulier.';
+            alert('Oeps! ' + errorMessage);
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    } catch (error) {
+        // Network error
+        console.error('Form submission error:', error);
+        alert('Oeps! Er was een probleem bij het verzenden van uw formulier. Controleer uw internetverbinding.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+    }
 });
 
 // ===== Smooth Scroll for Navigation Links =====
@@ -208,6 +208,17 @@ style.textContent = `
     .form-group textarea:invalid:not(:placeholder-shown),
     .form-group select:invalid:not(:placeholder-shown) {
         border-color: #f44336;
+    }
+    
+    .success-message {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 500;
+        margin-top: 2rem;
+        border: 1px solid #c8e6c9;
     }
 `;
 document.head.appendChild(style);

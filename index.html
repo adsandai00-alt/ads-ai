@@ -50,7 +50,13 @@
             <h2>Dien een opdracht in</h2>
             <p class="section-subtitle">Vul het formulier in en wij nemen contact met u op</p>
 
-            <form class="submission-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <form class="submission-form" action="https://api.staticforms.dev/submit" method="POST">
+                <!-- StaticForms API Key - vervang met je eigen API key -->
+                <input type="hidden" name="apiKey" value="sf_7f8264b9235acc71f7fe74b2">
+                
+                <!-- Optional: Redirect URL na verzending (kan ook in JS worden afgehandeld) -->
+                <input type="hidden" name="redirectTo" value="">
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="org-name">Organisatienaam *</label>
@@ -111,7 +117,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 ADS & AI - De Haagse Hogeschool. Alle rechten voorbehouden.</p>
+            <p>&copy; 2026 ADS & AI - De Haagse Hogeschool.</p>
         </div>
     </footer>
 
