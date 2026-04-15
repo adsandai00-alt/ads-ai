@@ -458,13 +458,6 @@ body {
     border-radius: 2px;
 }
 
-.section-subtitle {
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    margin-bottom: var(--spacing-2xl);
-}
-
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -548,9 +541,6 @@ body {
     font-size: 0.95rem;
     line-height: 1.6;
 }
-
-
-
 
 
 /* ===== Contact Section ===== */
