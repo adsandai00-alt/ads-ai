@@ -5,10 +5,6 @@ const successMessage = document.getElementById('success-message');
 
 // Validation rules
 const validators = {
-    organization: (value) => {
-        if (!value.trim()) return 'Organisatienaam is verplicht';
-        return '';
-    },
     contact_name: (value) => {
         if (!value.trim()) return 'Contactpersoon naam is verplicht';
         if (value.trim().length < 2) return 'Naam moet minstens 2 karakters lang zijn';
