@@ -33,6 +33,8 @@ const validators = {
     }
 };
 
+
+
 // Get all form fields
 const formFields = {
     organization: document.querySelector('input[name="organization"]'),
@@ -94,8 +96,11 @@ Object.keys(formFields).forEach(fieldName => {
         
         // Clear error on input
         field.addEventListener('input', () => {
-            if (field.parentElement.querySelector('.error-message')?.textContent) {
-                validateField(fieldName);
+            const errorElement = field.parentElement.querySelector('.error-message');
+            if (errorElement) {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                field.style.borderColor = '#cfd8dc'; // reset border
             }
         });
     }
