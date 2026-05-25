@@ -24,6 +24,16 @@ const validators = {
         if (!value.trim()) return 'Beschrijving is verplicht';
         if (value.trim().length < 10) return 'Beschrijving moet minstens 10 karakters lang zijn';
         return '';
+    },
+    problem: (value) => {
+        if (!value.trim()) return 'Probleemdefinitie is verplicht';
+        if (value.trim().length < 10) return 'Probleemdefinitie moet minstens 10 karakters lang zijn';
+        return '';
+    },
+    goals: (value) => {
+        if (!value.trim()) return 'Doelen / deliverables is verplicht';
+        if (value.trim().length < 10) return 'Doelen / deliverables moet minstens 10 karakters lang zijn';
+        return '';
     }
 };
 
@@ -32,7 +42,10 @@ const formFields = {
     organization: document.querySelector('input[name="organization"]'),
     contact_name: document.querySelector('input[name="contact_name"]'),
     email: document.querySelector('input[name="email"]'),
-    background: document.querySelector('textarea[name="background"]')
+    background: document.querySelector('textarea[name="background"]'),
+    problem: document.querySelector('textarea[name="problem"]'),
+    goals: document.querySelector('textarea[name="goals"]'),
+    dataset: document.querySelector('textarea[name="dataset"]')
 };
 
 // Validate single field
