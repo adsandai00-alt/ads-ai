@@ -241,3 +241,163 @@ document.head.appendChild(style);
 
 console.log('%cADS & AI DataLabs', 'color: #3d4d5c; font-size: 20px; font-weight: bold;');
 console.log('%cDe Haagse Hogeschool', 'color: #00bcd4; font-size: 14px;');
+
+
+// ===== Chatbot Widget =====
+
+(function initChatWidget() {
+    const API_BASE = (window.CHATBOT_API_BASE || 'http://localhost:8000').replace(/\/$/, '');
+
+    const toggleBtn = document.getElementById('chat-toggle');
+    const panel = document.getElementById('chat-panel');
+    const closeBtn = document.getElementById('chat-close');
+    const messagesEl = document.getElementById('chat-messages');
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('chat-send');
+    const roleBtns = document.querySelectorAll('.chat-role-btn');
+
+    if (!toggleBtn || !panel || !form) return; // widget not on this page
+
+    // Session id persists for the browser tab
+    let sessionId = sessionStorage.getItem('ads_ai_chat_session');
+    if (!sessionId) {
+        sessionId = (crypto.randomUUID && crypto.randomUUID()) ||
+                    ('s_' + Date.now() + '_' + Math.random().toString(36).slice(2));
+        sessionStorage.setItem('ads_ai_chat_session', sessionId);
+    }
+
+    let userType = 'student';
+    let greeted = false;
+
+    function setOpen(open) {
+        panel.hidden = !open;
+        toggleBtn.classList.toggle('is-open', open);
+        toggleBtn.setAttribute('aria-expanded', String(open));
+        if (open) {
+            if (!greeted) {
+                appendBotMessage(
+                    userType === 'student'
+                        ? 'Hoi! Vraag me iets over de opleiding of de projecttypen.'
+                        : 'Hallo! Vraag me wat een goede opdracht maakt of beschrijf je idee — ik denk graag mee.'
+                );
+                greeted = true;
+            }
+            setTimeout(() => input && input.focus(), 50);
+        }
+    }
+
+    function appendUserMessage(text) {
+        const el = document.createElement('div');
+        el.className = 'chat-msg user';
+        el.textContent = text;
+        messagesEl.appendChild(el);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function appendBotMessage(text, sources) {
+        const el = document.createElement('div');
+        el.className = 'chat-msg bot';
+        el.textContent = text;
+        if (sources && sources.length) {
+            const details = document.createElement('details');
+            details.className = 'chat-sources';
+            const summary = document.createElement('summary');
+            summary.textContent = 'Bronnen';
+            details.appendChild(summary);
+            const ul = document.createElement('ul');
+            sources.forEach(s => {
+                const li = document.createElement('li');
+                li.textContent = `${s.source} > ${s.heading}`;
+                ul.appendChild(li);
+            });
+            details.appendChild(ul);
+            el.appendChild(details);
+        }
+        messagesEl.appendChild(el);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return el;
+    }
+
+    function appendPendingMessage() {
+        const el = document.createElement('div');
+        el.className = 'chat-msg bot pending';
+        el.textContent = '…';
+        messagesEl.appendChild(el);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return el;
+    }
+
+    function appendErrorMessage(text) {
+        const el = document.createElement('div');
+        el.className = 'chat-msg error';
+        el.textContent = text;
+        messagesEl.appendChild(el);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    toggleBtn.addEventListener('click', () => setOpen(panel.hidden));
+    closeBtn.addEventListener('click', () => setOpen(false));
+
+    roleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            roleBtns.forEach(b => {
+                b.classList.toggle('active', b === btn);
+                b.setAttribute('aria-selected', String(b === btn));
+            });
+            userType = btn.dataset.role;
+            // Reset the session so the assistant talks to the new role cleanly
+            fetch(`${API_BASE}/reset`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ session_id: sessionId }),
+            }).catch(() => {});
+            messagesEl.innerHTML = '';
+            greeted = false;
+            appendBotMessage(
+                userType === 'student'
+                    ? 'Hoi student! Vraag me iets over de opleiding of de projecttypen.'
+                    : 'Hallo! Vraag me wat een goede opdracht maakt of beschrijf je idee — ik denk graag mee.'
+            );
+            greeted = true;
+        });
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = input.value.trim();
+        if (!message) return;
+
+        appendUserMessage(message);
+        input.value = '';
+        const pending = appendPendingMessage();
+        sendBtn.disabled = true;
+
+        try {
+            const res = await fetch(`${API_BASE}/chat`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message,
+                    user_type: userType,
+                    session_id: sessionId,
+                }),
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}`);
+            }
+            const data = await res.json();
+            pending.remove();
+            appendBotMessage(data.reply || '(geen antwoord)', data.sources);
+        } catch (err) {
+            pending.remove();
+            appendErrorMessage(
+                'Kon de chatbot niet bereiken. Draait de backend op ' + API_BASE + '?'
+            );
+            console.error('chat error:', err);
+        } finally {
+            sendBtn.disabled = false;
+            input.focus();
+        }
+    });
+})();

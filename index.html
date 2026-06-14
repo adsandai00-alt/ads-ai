@@ -260,6 +260,36 @@
         </div>
     </footer>
 
+    <!-- Chatbot Widget -->
+    <div id="chat-widget">
+        <button id="chat-toggle" type="button" aria-label="Open chatbot">
+            <span class="chat-toggle-icon" aria-hidden="true">💬</span>
+            <span class="chat-toggle-label">Vraag het de bot</span>
+        </button>
+
+        <div id="chat-panel" role="dialog" aria-labelledby="chat-title" hidden>
+            <header class="chat-header">
+                <div>
+                    <h3 id="chat-title">ADS &amp; AI assistent</h3>
+                    <p class="chat-subtitle">Vraag iets over de opleiding of opdrachten</p>
+                </div>
+                <button id="chat-close" type="button" aria-label="Sluit chatbot">&times;</button>
+            </header>
+
+            <div class="chat-role-toggle" role="tablist" aria-label="Wie ben je?">
+                <button type="button" data-role="student" class="chat-role-btn active" role="tab" aria-selected="true">Student</button>
+                <button type="button" data-role="company" class="chat-role-btn" role="tab" aria-selected="false">Bedrijf</button>
+            </div>
+
+            <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+
+            <form id="chat-form" class="chat-form" autocomplete="off">
+                <input id="chat-input" type="text" placeholder="Stel je vraag…" maxlength="2000" required>
+                <button type="submit" id="chat-send" aria-label="Verstuur">➤</button>
+            </form>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "nl-student-projecttypen",
+    "lang": "nl",
+    "user_type": "student",
+    "question": "Welke soorten opdrachten kan ik doen?",
+    "expected_source": "project_types.md",
+    "must_include_any": ["Machine Learning", "Deep Learning", "Autonomous Systems"]
+  },
+  {
+    "id": "nl-student-team",
+    "lang": "nl",
+    "user_type": "student",
+    "question": "Werk ik alleen of in een team aan een opdracht?",
+    "expected_source": "faq_students.md",
+    "must_include_any": ["team", "studenten"]
+  },
+  {
+    "id": "nl-student-tools",
+    "lang": "nl",
+    "user_type": "student",
+    "question": "Welke programmeertalen en tools gebruik ik?",
+    "expected_source": "faq_students.md",
+    "must_include_any": ["Python"]
+  },
+  {
+    "id": "nl-student-jaar2",
+    "lang": "nl",
+    "user_type": "student",
+    "question": "Wat leer ik in jaar 2 van de opleiding?",
+    "expected_source": "program_overview.md",
+    "must_include_any": ["Machine Learning", "Deep Learning"]
+  },
+  {
+    "id": "en-student-projecttypes",
+    "lang": "en",
+    "user_type": "student",
+    "question": "What kinds of student projects exist?",
+    "expected_source": "project_types.md",
+    "must_include_any": ["Machine Learning", "Deep Learning", "Autonomous Systems"]
+  },
+  {
+    "id": "en-student-team-size",
+    "lang": "en",
+    "user_type": "student",
+    "question": "How big is a student project team?",
+    "expected_source": "faq_students.md",
+    "must_include_any": ["3", "5"]
+  },
+  {
+    "id": "nl-company-goede-opdracht",
+    "lang": "nl",
+    "user_type": "company",
+    "question": "Wat maakt een goede opdracht voor jullie studenten?",
+    "expected_source": "assignment_requirements.md",
+    "must_include_any": ["probleemstelling", "dataset"]
+  },
+  {
+    "id": "nl-company-tijd",
+    "lang": "nl",
+    "user_type": "company",
+    "question": "Hoeveel tijd moet ik er als opdrachtgever in steken?",
+    "expected_source": "faq_companies.md",
+    "must_include_any": ["uur", "week"]
+  },
+  {
+    "id": "nl-company-geen-dataset",
+    "lang": "nl",
+    "user_type": "company",
+    "question": "Ik heb geen dataset, kan dat wel?",
+    "expected_source": "faq_companies.md",
+    "must_include_any": ["dataset", "Mirabai"]
+  },
+  {
+    "id": "nl-company-kosten",
+    "lang": "nl",
+    "user_type": "company",
+    "question": "Wat kost het mij om een opdracht in te dienen?",
+    "expected_source": "faq_companies.md",
+    "must_include_any": ["geen kosten", "kosten"]
+  },
+  {
+    "id": "en-company-good-assignment",
+    "lang": "en",
+    "user_type": "company",
+    "question": "What does a good machine learning assignment look like for your students?",
+    "expected_source": "assignment_requirements.md",
+    "must_include_any": ["dataset", "problem"]
+  },
+  {
+    "id": "en-company-time-commitment",
+    "lang": "en",
+    "user_type": "company",
+    "question": "How much time per week do I need to commit as a partner?",
+    "expected_source": "faq_companies.md",
+    "must_include_any": ["1", "2", "week"]
+  },
+  {
+    "id": "nl-shared-contact",
+    "lang": "nl",
+    "user_type": "student",
+    "question": "Wie is mijn contactpersoon bij de opleiding?",
+    "expected_source": "contact.md",
+    "must_include_any": ["Mirabai"]
+  },
+  {
+    "id": "nl-shared-indienen",
+    "lang": "nl",
+    "user_type": "company",
+    "question": "Hoe dien ik een opdracht in?",
+    "expected_source": "assignment_requirements.md",
+    "must_include_any": ["formulier"]
+  },
+  {
+    "id": "nl-shared-projecttype-keuze",
+    "lang": "nl",
+    "user_type": "company",
+    "question": "Welk projecttype past bij voorspellen op basis van tabelgegevens?",
+    "expected_source": "faq_companies.md",
+    "must_include_any": ["Machine Learning"]
+  }
+]
